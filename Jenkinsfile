@@ -11,6 +11,7 @@ node {
                env.PATH = "${dockerHome}/bin:${env.PATH}"
           }
           stage('Maven Build') {
+               sh('ls')
                sh('.\\mvnw package')               
           }
           stage('Build image') {
