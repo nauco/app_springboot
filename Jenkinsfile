@@ -12,7 +12,7 @@ node {
           }
           stage('Maven Build') {
                sh('ls')
-               sh('./mvnw package')               
+               sh('sudo ./mvnw package')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
