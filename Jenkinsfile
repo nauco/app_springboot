@@ -11,7 +11,7 @@ node {
                env.PATH = "${dockerHome}/bin:${env.PATH}"
           }
           stage('Maven Build') {
-               sh('.\mvnw package')               
+               sh('.\\mvnw package')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
