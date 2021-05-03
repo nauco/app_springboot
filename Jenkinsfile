@@ -12,7 +12,8 @@ node {
           }
           stage('Maven Build') {
                sh('ls')
-               sh('sudo ./mvnw package')               
+               sh('chmod +x ./mvnw')
+               sh('./mvnw package')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
