@@ -10,6 +10,9 @@ node {
                def dockerHome = tool 'myDocker'
                env.PATH = "${dockerHome}/bin:${env.PATH}"
           }
+          stage('Maven Build') {
+               sh('.\mvnw package')               
+          }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
           }
