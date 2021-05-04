@@ -9,16 +9,11 @@ node {
           stage('Initialize Docker'){
                def dockerHome = tool 'myDocker'
                env.PATH = "${dockerHome}/bin:${env.PATH}"
-               
-               sh '''
-                echo "PATH = ${PATH}"
-                echo "M2_HOME = ${M2_HOME}"
-               '''
           }
           stage('Maven Build') {
                sh('ls')
                sh('chmod +x ./mvnw')
-               //sh('./mvnw package -Dmaven.repo.local=/home/jenkins/.m2/repository')               
+               sh('./mvnw package -Dmaven.repo.local=/home/jenkins/.m2/repository')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
@@ -26,28 +21,6 @@ node {
           stage('Push image') {
                ecr_push()
           }
-       /*
-          stage('Clone and Push manifest') {
-               //git Clone
-               def gitValues = git branch: 'main', credentialsId: 'e347081a-3fef-4da4-ad62-bd7eca486575', url:'git@github.com:nauco/ops.git'
-               modify_manifest('deployment.yaml')
-               modify_manifest('./prod/deployment.yaml')
-               sh('git config --global user.email "hodong42@gmail.com"') 
-               sh('git config --global user.name "hodong"')
-               sh('git add .')
-               sh('git commit -m "update image"')
-               sshagent(['e347081a-3fef-4da4-ad62-bd7eca486575']) {
-                    sh "git push origin main"
-               }
-          }
-          stage('Trigger Argocd and Deploy') {
-               deploy_app()
-          }
-          slackSend (channel: '#project', color: 'good', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")
-          */
-     }
-     catch (e) {
-          //slackSend (channel: '#project', color: 'danger', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")    
      }
 }
 
