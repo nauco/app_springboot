@@ -13,7 +13,7 @@ node {
           stage('Maven Build') {
                sh('ls')
                sh('chmod +x ./mvnw')
-               sh('./mvnw package')               
+               sh('./mvnw package -Dmaven.repo.local=/home/jenkins/.m2/repository')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
