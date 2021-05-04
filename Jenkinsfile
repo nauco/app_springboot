@@ -14,50 +14,48 @@ node {
                sh('./mvnw package -Dmaven.repo.local=/var/jenkins_home/.m2/repository')               
           }
           */
-                        stage('Initialize Docker'){
-               def dockerHome = tool 'myDocker'
-               env.PATH = "${dockerHome}/bin:${env.PATH}"
-               }
-         docker.image('maven:3.8.1-adoptopenjdk-11').inside('-v $HOME/.m2:/root/.m2') {
-              stage('Clone repository') {
+          stage('Clone repository') {
                checkout scm
-               }
-
-             stage('Build') {
-                 sh 'mvn -B'
-             }
-                        stage('Build image') {
-               //sh('docker build -t sample-java --network=host .')
-               sh('docker images')
           }
-              
-         }
+          stage('Initialize Docker'){
+          def dockerHome = tool 'myDocker'
+          env.PATH = "${dockerHome}/bin:${env.PATH}"
+          }
+          docker.image('maven:3.8.1-adoptopenjdk-11').inside('-v $HOME/.m2:/root/.m2') {
+               stage('Build') {
+                    sh 'mvn -B'
+               }
+          }
+          stage('Build image') {
+          //sh('docker build -t sample-java --network=host .')
+          sh('docker images')
+          }
 
           stage('Push image') {
-               //ecr_push()
+          //ecr_push()
           }
-       /*
+          /*
           stage('Clone and Push manifest') {
-               //git Clone
-               def gitValues = git branch: 'main', credentialsId: 'e347081a-3fef-4da4-ad62-bd7eca486575', url:'git@github.com:nauco/ops.git'
-               modify_manifest('deployment.yaml')
-               modify_manifest('./prod/deployment.yaml')
-               sh('git config --global user.email "hodong42@gmail.com"') 
-               sh('git config --global user.name "hodong"')
-               sh('git add .')
-               sh('git commit -m "update image"')
-               sshagent(['e347081a-3fef-4da4-ad62-bd7eca486575']) {
-                    sh "git push origin main"
-               }
+          //git Clone
+          def gitValues = git branch: 'main', credentialsId: 'e347081a-3fef-4da4-ad62-bd7eca486575', url:'git@github.com:nauco/ops.git'
+          modify_manifest('deployment.yaml')
+          modify_manifest('./prod/deployment.yaml')
+          sh('git config --global user.email "hodong42@gmail.com"') 
+          sh('git config --global user.name "hodong"')
+          sh('git add .')
+          sh('git commit -m "update image"')
+          sshagent(['e347081a-3fef-4da4-ad62-bd7eca486575']) {
+          sh "git push origin main"
+          }
           }
           stage('Trigger Argocd and Deploy') {
-               deploy_app()
+          deploy_app()
           }
           slackSend (channel: '#project', color: 'good', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")
           */
      }
      catch (e) {
-          //slackSend (channel: '#project', color: 'danger', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")    
+     //slackSend (channel: '#project', color: 'danger', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'")    
      }
 }
 
