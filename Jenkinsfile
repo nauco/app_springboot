@@ -13,10 +13,12 @@ node {
           stage('Maven Build') {
                sh('ls')
                sh('chmod +x ./mvnw')
-               sh('./mvnw package -Dmaven.repo.local=/var/jenkins_home/.m2/repository')               
+               sh('cd ..')
+               sh('ls')
+               //sh('./mvnw package -Dmaven.repo.local=/var/jenkins_home/.m2/repository')               
           }
           stage('Build image') {
-               sh('docker build -t sample-java --network=host .')
+               //sh('docker build -t sample-java --network=host .')
           }
           stage('Push image') {
                ecr_push()
