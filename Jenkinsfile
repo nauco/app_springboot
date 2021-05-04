@@ -2,25 +2,23 @@ ECR_URI = "191845259489.dkr.ecr.ap-northeast-2.amazonaws.com/your-repo-name"
 APP_NAME = "flask-dev2"
 
 node {
-     try{
-          stage('Clone repository') {
-               checkout scm
-          }
-          stage('Initialize Docker'){
-               def dockerHome = tool 'myDocker'
-               env.PATH = "${dockerHome}/bin:${env.PATH}"
-          }
-          stage('Maven Build') {
-               sh('ls')
-               sh('chmod +x ./mvnw')
-               sh('./mvnw package -Dmaven.repo.local=/home/jenkins/.m2/repository')               
-          }
-          stage('Build image') {
-               sh('docker build -t sample-java --network=host .')
-          }
-          stage('Push image') {
-               ecr_push()
-          }
+     stage('Clone repository') {
+          checkout scm
+     }
+     stage('Initialize Docker'){
+          def dockerHome = tool 'myDocker'
+          env.PATH = "${dockerHome}/bin:${env.PATH}"
+     }
+     stage('Maven Build') {
+          sh('ls')
+          sh('chmod +x ./mvnw')
+          sh('./mvnw package -Dmaven.repo.local=/home/jenkins/.m2/repository')               
+     }
+     stage('Build image') {
+          sh('docker build -t sample-java --network=host .')
+     }
+     stage('Push image') {
+          ecr_push()
      }
 }
 
