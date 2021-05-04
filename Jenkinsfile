@@ -14,15 +14,15 @@ node {
                sh('./mvnw package -Dmaven.repo.local=/var/jenkins_home/.m2/repository')               
           }
           */
-          
+                        stage('Initialize Docker'){
+               def dockerHome = tool 'myDocker'
+               env.PATH = "${dockerHome}/bin:${env.PATH}"
+               }
          docker.image('maven:3.8.1-adoptopenjdk-11').inside('-v $HOME/.m2:/root/.m2') {
               stage('Clone repository') {
                checkout scm
                }
-              stage('Initialize Docker'){
-               def dockerHome = tool 'myDocker'
-               env.PATH = "${dockerHome}/bin:${env.PATH}"
-               }
+
              stage('Build') {
                  sh 'mvn -B'
              }
