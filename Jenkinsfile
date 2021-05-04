@@ -13,7 +13,7 @@ node {
           stage('Maven Build') {
                sh('ls')
                sh('chmod +x ./mvnw')
-               sh('./mvnw package -T 1C -Dmaven.test.skip -DskipTests -Dmaven.artifact.threads=30')               
+               sh('./mvnw package')               
           }
           stage('Build image') {
                sh('docker build -t sample-java --network=host .')
