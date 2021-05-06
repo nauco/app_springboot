@@ -4,6 +4,23 @@ APP_NAME = "flask-dev2"
 node {
      stage('Approval') {
           try {
+              echo "========== create slack message ========="
+              def cmd = """
+                  curl -d '{"env": ${env}, "buildNumber": "${BUILD_NUMBER}", "jobName": ${JOB_NAME}, "channel": "project"}' \
+                  -H "Content-Type: application/json" \
+                  -X POST https://01zsmguyhh.execute-api.ap-northeast-2.amazonaws.com/agw/create-slack-message
+              """
+              def result = getShellCommandResult(cmd)
+              def resultJson = readJSON text: "${result}"
+              if (resultJson['status'] == 'Success') {
+                  print('Created Slack Message!')
+              } else if (resultJson['status'] == 'Fail') {
+                  throw new Exception('A fail was returned from the api call...')
+              } else {
+                  throw new Exception('An incorrect status value was returned...')
+              }
+               
+               
               def approval = input(
                   id: 'wait-approval',
                   message: 'Approve?',
