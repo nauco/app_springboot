@@ -4,7 +4,6 @@ APP_NAME = "flask-dev2"
 node {
      stage('Approval') {
        steps {
-           script {
                try {
                    def approval = input(
                        id: 'wait-approval'
@@ -26,8 +25,7 @@ node {
                    error e
                    currentBuild.result = 'Fail'
                }   
-           } 
-       }
+           }
      }
      stage('Clone repository') {
           checkout scm
