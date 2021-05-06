@@ -10,7 +10,6 @@ node {
           env.PATH = "${dockerHome}/bin:${env.PATH}"
      }
      stage('Maven Build') {
-          sh('ls')
           sh('chmod +x ./mvnw')
           sh("./mvnw package -Dmaven.repo.local=/root/.m2/repository")               
      }
