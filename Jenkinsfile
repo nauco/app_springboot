@@ -10,14 +10,11 @@ node {
                   submitterParameter: 'approver',
                   parameters: [choice(choices: ['Cancel', 'Deploy'],description: 'Are you sure?',name: 'choice')]
                   )
-               if (approval['approver'] != "${administrator}") {
-                 throw new Exception('You do not have permission.')
-               }
                if (approval['choice'] == 'Deploy') {
                  print('choice deploy')
                  currentBuild.result = 'Success'
                } else {
-                 throw new Exception('Choosed cancel')
+                 throw new Exception('Choose cancel')
                 }
           } catch(Exception e) {
               error e
