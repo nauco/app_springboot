@@ -3,27 +3,26 @@ APP_NAME = "flask-dev2"
 
 node {
      stage('Approval') {
-               try {
-                   def approval = input(
-                       id: 'wait-approval',
-                       message: 'Approve?',
-                       submitterParameter: 'approver',
-                       parameters: [choice(choices: ['Cancel', 'Deploy'],description: 'Are you sure?',name: 'choice')]
-          )
-             if (approval['approver'] != "${administrator}") {
+          try {
+              def approval = input(
+                  id: 'wait-approval',
+                  message: 'Approve?',
+                  submitterParameter: 'approver',
+                  parameters: [choice(choices: ['Cancel', 'Deploy'],description: 'Are you sure?',name: 'choice')]
+                  )
+               if (approval['approver'] != "${administrator}") {
                  throw new Exception('You do not have permission.')
-             }
-
-                   if (approval['choice'] == 'Deploy') {
+               }
+               if (approval['choice'] == 'Deploy') {
                  print('choice deploy')
                  currentBuild.result = 'Success'
-             } else {
+               } else {
                  throw new Exception('Choosed cancel')
                 }
-               } catch(Exception e) {
-                   error e
-                   currentBuild.result = 'Fail'
-               }   
+          } catch(Exception e) {
+              error e
+              currentBuild.result = 'Fail'
+          }   
      }
      stage('Clone repository') {
           checkout scm
