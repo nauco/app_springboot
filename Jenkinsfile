@@ -57,6 +57,10 @@ node {
      }
 }
 
+def getShellCommandResult(cmd) {
+    return sh(script: cmd, returnStdout: true).trim()
+}
+
 def ecr_push() {
      withAWS(credentials: 'ecr-credit', region: 'ap-northeast-2') {
           def login = ecrLogin()
