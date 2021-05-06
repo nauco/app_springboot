@@ -5,7 +5,7 @@ node {
      stage('Approval') {
                try {
                    def approval = input(
-                       id: 'wait-approval'
+                       id: 'wait-approval',
                        message: 'Approve?',
                        submitterParameter: 'approver',
                        parameters: [choice(choices: ['Cancel', 'Deploy'],description: 'Are you sure?',name: 'choice')]
