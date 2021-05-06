@@ -6,7 +6,7 @@ node {
           try {
               echo "========== create slack message ========="
               def cmd = """
-                  curl -d '{"env": ${env}, "buildNumber": "${BUILD_NUMBER}", "jobName": ${JOB_NAME}, "channel": "project"}' \
+                  curl -d '{"buildNumber": "${BUILD_NUMBER}", "jobName": ${JOB_NAME}, "channel": "project"}' \
                   -H "Content-Type: application/json" \
                   -X POST https://01zsmguyhh.execute-api.ap-northeast-2.amazonaws.com/agw/create-slack-message
               """
