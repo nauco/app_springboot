@@ -12,7 +12,7 @@ node {
      stage('Maven Build') {
           sh('ls')
           sh('chmod +x ./mvnw')
-          sh("./mvnw package -Dmaven.repo.local='${env.WORKSPACE}'")               
+          sh("./mvnw package -Dmaven.repo.local=/root/.m2/repository")               
      }
      stage('Build image') {
           sh('docker build -t sample-java --network=host .')
