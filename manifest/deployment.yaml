@@ -16,7 +16,7 @@ spec:
         app: sample-springboot
     spec:
       containers:
-      - image: 191845259489.dkr.ecr.ap-northeast-2.amazonaws.com/your-repo-name:11
+      - image: 191845259489.dkr.ecr.ap-northeast-2.amazonaws.com/your-repo-name:68
         imagePullPolicy: Always
         name: sample-flask
         ports:
