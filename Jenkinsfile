@@ -1,4 +1,4 @@
-ECR_URI = "191845259489.dkr.ecr.ap-northeast-2.amazonaws.com/your-repo-name"
+ECR_URI = "your-ecr-repo-name"
 APP_NAME = "flask-dev2"
 
 node {
