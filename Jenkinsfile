@@ -65,8 +65,8 @@ def ecr_push() {
      withAWS(credentials: 'ecr-credit', region: 'ap-northeast-2') {
           def login = ecrLogin()
           sh "${login}"
-          sh("docker tag sample-java:latest ${ECR_URI}:${env.BUILD_NUMBER}")
-          sh("docker push ${ECR_URI}:${env.BUILD_NUMBER}")
+          sh("docker tag sample-java:latest ${ECR_URL}:${env.BUILD_NUMBER}")
+          sh("docker push ${ECR_URL}:${env.BUILD_NUMBER}")
      }
 }
 
