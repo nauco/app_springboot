@@ -1,10 +1,9 @@
-ECR_URI = "your-ecr-repo-name"
 APP_NAME = "flask-dev2"
 
 node {
      stage('Approval') {
           try {
-               echo "${ecr-url}"
+              echo "${ECR_URL}"
               echo "========== create slack message ========="
               def cmd = """
                   curl -d '{"buildNumber": "${BUILD_NUMBER}", "jobName": ${JOB_NAME}, "channel": "project"}' \
