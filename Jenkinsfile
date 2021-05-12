@@ -4,7 +4,8 @@ APP_NAME = "flask-dev2"
 node {
      stage('Approval') {
           try {
-               echo "${env.ecr-url}"
+              def env = System.getenv()
+               println(env['ecr-url'])
               echo "========== create slack message ========="
               def cmd = """
                   curl -d '{"buildNumber": "${BUILD_NUMBER}", "jobName": ${JOB_NAME}, "channel": "project"}' \
